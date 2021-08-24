@@ -1,6 +1,6 @@
 # 记账工具
 
-![预览图](\assets\0824140114.jpg)
+![预览图](https://gitee.com/aimaier4869/keep-accounts/raw/master/assets/0824140114.jpg)
 
 ## 1. 使用
 
