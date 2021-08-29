@@ -107,7 +107,9 @@ module.exports = {
                     }
                 }
             })
-            obj.subtract = obj.receipts - obj.expenses
+            obj.subtract = (obj.receipts - obj.expenses).toFixed(2)
+            obj.expenses = obj.expenses.toFixed(2)
+            obj.receipts = obj.receipts.toFixed(2)
             this.thisMonth = obj
         },
         getAccountAllAmount(id) {

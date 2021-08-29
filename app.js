@@ -139,7 +139,7 @@ app.post('/api/baseconfig/exchange', (req, res) => {
 
 app.delete('/api/deleteLog/:id', (req, res) => {
     let id = +req.params.id
-    let index = -1,thisLog
+    let index = -1, thisLog
     for (let i = 0; i < baseConfig.logBooks.length; i++) {
         thisLog = little.create(baseConfig.logBooks[i])
         index = thisLog.findIndex((v, i) => {
@@ -185,9 +185,23 @@ app.delete('/api/baseconfig/item', (req, res) => {
 
 })
 
+let browserTimer = null;
+
+app.get('/api/browserClosed', (req, res) => {
+    clearTimeout(browserTimer);
+    browserTimer = null;
+    browserTimer = setTimeout(() => {
+        console.log('欢迎下次使用！')
+        process.exit(0);
+    }, 3000)
+    res.send('1')
+})
+
 app.get('/', (req, res) => {
     res.sendFile(path.resolve(__dirname, './public/index.html'));
 })
+
+
 
 
 app.listen(8081);
