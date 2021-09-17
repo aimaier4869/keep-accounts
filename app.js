@@ -14,7 +14,7 @@ let logs = little.create(`logs${date.year}${date.month}`);
 
 if (JSON.stringify(logs) === '{}') {
     logs = little.create(`logs${date.year}${date.month}`, []);
-    baseConfig.push(`logs${date.year}${date.month}`)
+    baseConfig.logBooks.push(`logs${date.year}${date.month}`);
 }
 
 app.use(express.static(path.resolve(__dirname, './public')));

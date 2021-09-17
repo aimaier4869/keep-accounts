@@ -153,6 +153,7 @@ module.exports = {
                         }
                     }
                 })
+                 obj.tagAmount = obj.tagAmount.toFixed(2)
                 tags.push(obj)
             })
             return tags;

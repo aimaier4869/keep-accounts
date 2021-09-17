@@ -129,7 +129,7 @@ module.exports = {
     async created() {
         let date = new Date()
         let month = date.getMonth() + 1
-        this.form.date = `${date.getFullYear()}-${month.toString().padStart(2, '0')}-${date.getDate()}`
+        this.form.date = `${date.getFullYear()}-${month.toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`
         this.getData()
         let res = await fetch('/api/alllogs')
         let data = await res.json()
@@ -190,7 +190,9 @@ module.exports = {
                 obj.toAccountId = +this.form.toAccount
                 obj.amount = +this.form.amount
                 let date = new Date()
-                obj.bargainDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+                let year = date.getFullYear()
+                let month = date.getMonth() + 1
+                obj.bargainDate = `${year}-${month.toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`
             } else {
                 this.$message.error('bargainType没有匹配到值')
                 return

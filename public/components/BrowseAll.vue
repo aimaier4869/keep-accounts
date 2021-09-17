@@ -1,6 +1,7 @@
 <template>
     <div>
         <el-page-header @back="$router.push('/home')" title="回到首页" content="所有记录"></el-page-header>
+        <div class="info">共 {{ logCount.all }} 条记录，其中有 {{ logCount.expenses }} 笔支出，有 {{ logCount.receipts }} 笔收入。</div>
         <!-- 表格区域 -->
         <el-table :data="tableData" border max-height="700px" v-if="baseConfig">
             <el-table-column prop="logDate" label="记录id" width="130"> </el-table-column>
@@ -146,7 +147,8 @@ module.exports = {
             dialogVisible: false,
             form: {},
             type: '',
-            subTypes: []
+            subTypes: [],
+            logCount: {}
         }
     },
     components: { Card },
@@ -177,7 +179,9 @@ module.exports = {
         getDay(date) {
             let dateObj = new Date(date)
             let dayArr = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
-            return date + ' ' + dayArr[dateObj.getDay()]
+            // 日期后面加周几
+            // return date + ' ' + dayArr[dateObj.getDay()]
+            return date
         },
         isExpenses(rowData) {
             // 0 收入
@@ -201,6 +205,21 @@ module.exports = {
             let data = await res.json()
             this.tableData = data.arr.reverse()
             this.height = data.arr.length * 50 + 50
+
+            // compute log count
+            let obj = {
+                expenses: 0,
+                receipts: 0
+            }
+            this.tableData.forEach((v, i) => {
+                if(v.bargainType === 'expenses'){
+                    obj.expenses++
+                }else if(v.bargainType === 'receipts'){
+                    obj.receipts++
+                }
+            })
+            obj.all = obj.expenses + obj.receipts
+            this.logCount = obj
         },
         filter(v, configProp, resProp) {
             resProp = resProp || 'label'
@@ -273,5 +292,11 @@ module.exports = {
 
 .yellow {
     color: #e6a23c;
+}
+
+.info {
+    margin-bottom: 20px;
+    padding-left: 10px;
+    font-size: 14px;
 }
 </style>
